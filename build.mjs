@@ -20,9 +20,7 @@ app=app.replaceAll("new URL('./worker.js', import.meta.url)",'inkWorkerURL').rep
 // Local file origins support self-contained classic Blob workers consistently.
 app=app.replace(/\{\s*type:\s*'module'\s*\}/g,'{}');
 const code=`${engine}\n${drawing}\n${raster}\nconst ROLLER_TEXTURES=${JSON.stringify(embeddedRollers)};\nconst BUILTIN_FONTS=${JSON.stringify(BUILTIN_FONTS)};\nconst ENGLISH_FONTS=${JSON.stringify(ENGLISH_FONTS)};\nconst inkWorkerURL=URL.createObjectURL(new Blob([${JSON.stringify(engine+'\n'+worker)}],{type:'text/javascript'}));\n${app}`;
-const diagnosticCode=(await read('layout-diagnostics.js')).replaceAll('</script','<\\/script');
 let html=await read('index.html');
-html=html.replace('<script src="layout-diagnostics.js" defer></script>',()=>'<script>'+diagnosticCode+'</script>');
 html=html.replace('<link rel="stylesheet" href="assets/ui.css">',`<style>${ui}</style>`).replace('<link rel="stylesheet" href="style.css">',`<style>${await read('style.css')}</style>`);
 const favicon=Buffer.from(await read('assets/favicon.svg')).toString('base64');
 html=html.replace('href="assets/favicon.svg"',`href="data:image/svg+xml;base64,${favicon}"`);
