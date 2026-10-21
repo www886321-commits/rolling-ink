@@ -7,7 +7,7 @@
 
 /* Consolidated v1.3.0 UI baseline. Source-derived, AGPL-3.0-only; see licenses/. */
 * { box-sizing: border-box; }
-html, body, #root { margin: 0; min-height: 100%; background: var(--ui-bg); }
+html, body, #ink-app { margin: 0; min-height: 100%; background: var(--ui-bg); }
 :root { font-synthesis: none; color-scheme: light; }
 :root[data-ui-theme="dark"] { color-scheme: dark; }
 button, input, select, textarea { font: inherit; }

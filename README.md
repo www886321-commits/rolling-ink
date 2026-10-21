@@ -32,7 +32,9 @@
 
 已在 Windows 的独立 Edge、Chrome、Firefox 和 WebKit 测试实例验证桌面、3813 × 1863 宽屏、手机尺寸、两种效果、字体、图片、手绘、自由变换控制点及 PNG／SVG 导出。WebKit 测试不等同于在真实 macOS／iOS Safari 设备上验收。
 
-自动发布前运行 Chromium、Firefox、WebKit 浏览器回归，并模拟外部 CSS 不可用、动态视口单位和 ResizeObserver 不可用的情况。
+自动发布前运行 Chromium、Firefox、WebKit 浏览器回归，并模拟外部 CSS 不可用、动态视口单位和 ResizeObserver 不可用，以及页面加载完成后被通用样式覆盖的情况。
+
+工作区使用独立的布局标识及保护规则，工具区域声明不参与自动翻译。若普通窗口异常而 InPrivate 正常，可在页面地址后加 `?diagnose=1`，点击「复制布局诊断」取得当前布局和匹配样式信息。诊断仅在本机生成，不包含输入文字、图片或手绘，不自动上传。
 
 ## 本地运行
 

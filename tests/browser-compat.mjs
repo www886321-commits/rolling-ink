@@ -58,6 +58,10 @@ try{
    assert.equal(await page.locator('[data-mode="stamp"]').getAttribute('aria-pressed'),'true');assert.equal(await page.locator('[data-key="roughness"]').first().inputValue(),'26');
    const desktop=await layout(page,1440,1000),wide=await layout(page,3813,1863);await layout(page,1440,1000);
    const stamp=await hash(page);assert.ok(stamp.ink>1000);
+   // Reproduce a normal first paint followed by generic styles inserted after load.
+   await page.evaluate(()=>setTimeout(()=>{const style=document.createElement('style');style.id='late-layout-overrides';style.textContent='main{display:block!important}.stage{display:none!important;height:0!important}.side-panel{display:block!important;height:auto!important;overflow:visible!important}.app-shell{height:auto!important;overflow:visible!important}';document.head.append(style);},500));
+   await page.waitForTimeout(800);await layout(page,1440,1000);assert.equal((await hash(page)).hash,stamp.hash);
+   await page.locator('#late-layout-overrides').evaluate(e=>e.remove());
    await page.click('[data-mode="roller"]');await ready(page);assert.equal(await page.locator('#roller-texture option').count(),13);assert.notEqual((await hash(page)).hash,stamp.hash);
    await page.screenshot({path:path.join(out,`${name}-desktop.png`),fullPage:true});
    await page.click('[data-mode="stamp"]');await page.locator('#text-input').fill('Ink');await page.locator('#font-family').selectOption('english-are-you-serious');await ready(page);
@@ -78,8 +82,9 @@ try{
    // Simulate browsers without dynamic viewport units and ResizeObserver.
    let fallback;
    if(!live){const fallbackPage=await browser.newPage({viewport:{width:1440,height:1000}});fallbackPage.on('pageerror',e=>errors.push('fallback: '+e.message));await fallbackPage.addInitScript(()=>{window.ResizeObserver=undefined;});await fallbackPage.route('**/rolling-ink/',async route=>{const html=(await readFile(path.join(site,'index.html'),'utf8')).replace(/(?:min-|max-)?height\s*:[^;{}]*dvh[^;{}]*;?/g,'');await route.fulfill({contentType:'text/html',body:html});});await fallbackPage.goto(base);await ready(fallbackPage);fallback=await layout(fallbackPage,1440,1000);await layout(fallbackPage,390,844);await fallbackPage.close();}
+   if(!live){const diagnosticPage=await browser.newPage();await diagnosticPage.goto(base+'?diagnose=1');await ready(diagnosticPage);assert.equal(await diagnosticPage.getByRole('button',{name:'复制布局诊断'}).isVisible(),true);const diagnostic=await diagnosticPage.evaluate(()=>window.__rollingInkLayoutDiagnostics.report());assert.equal(diagnostic.history.at(-1).layout.workspace.display,'grid');assert.ok(diagnostic.matchingLayoutRules.length>0);await diagnosticPage.close();}
    assert.deepEqual(errors,[]);assert.deepEqual(failed,[]);
-   const report={browser:name,version:browser.version(),passed:true,url:base,desktop,wide,mobile,externalCSSUnavailable:true,originalScanPixelsUnchanged:scanPixels,stamp:true,roller:true,fonts:true,image:true,drawAndFixedTransformHandles:true,png:[1024,683],svgPaths:true,viewportAndResizeFallback:!!fallback,errors,failed};reports.push(report);console.log(JSON.stringify(report));
+   const report={browser:name,version:browser.version(),delayedGenericStyleOverrides:true,passed:true,url:base,desktop,wide,mobile,externalCSSUnavailable:true,originalScanPixelsUnchanged:scanPixels,stamp:true,roller:true,fonts:true,image:true,drawAndFixedTransformHandles:true,png:[1024,683],svgPaths:true,viewportAndResizeFallback:!!fallback,errors,failed};reports.push(report);console.log(JSON.stringify(report));
   }catch(error){if(page)await page.screenshot({path:path.join(out,`${name}-failure.png`),fullPage:true}).catch(()=>{});const report={browser:name,passed:false,error:error.stack,errors,failed};reports.push(report);console.error(JSON.stringify(report));}
   finally{await browser?.close();}
  }

@@ -10,10 +10,10 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="root" class="app-shell">
-  <main class="workspace">
-    <aside class="side-panel" aria-label="工具设置">
-      <header class="topbar">
+<div id="ink-app" class="app-shell" translate="no">
+  <main id="ink-workspace" class="workspace">
+    <aside id="ink-settings" class="side-panel" aria-label="工具设置">
+      <header id="ink-topbar" class="topbar">
         <div class="brand"><span>滚墨印记</span><small>INK / 01</small></div>
         <p class="subtitle">文字与图片的干墨、滚印效果工具</p>
         <div class="source-switch segment" aria-label="素材类型">
@@ -22,7 +22,7 @@
           <button data-source="draw" aria-pressed="false"><span data-icon="pen"></span>手绘</button>
         </div>
       </header>
-      <nav class="sidebar-tabs" aria-label="工作面板">
+      <nav id="ink-tabs" class="sidebar-tabs" aria-label="工作面板">
         <button id="edit-tab" class="active" aria-selected="true" role="tab">编辑</button>
         <button id="export-tab" aria-selected="false" role="tab">导出</button>
       </nav>
@@ -167,7 +167,7 @@
       </div>
       <footer class="sidebar-footer"><span class="local-dot"></span><span>素材仅在本机处理</span><a href="README.md" target="_blank" rel="noopener" title="使用说明">使用说明 ↗</a><a href="https://github.com/www886321-commits/rolling-ink" target="_blank" rel="noopener noreferrer" title="开源代码与许可证">源码 ↗</a></footer>
     </aside>
-    <section class="stage" aria-label="作品预览">
+    <section id="ink-stage" class="stage" aria-label="作品预览">
       <header class="stage-meta">
         <span id="art-meta">干墨印章 <i>·</i> 2048 × 2048</span>
         <div class="canvas-view-controls">
@@ -208,6 +208,7 @@
   <div id="export-progress" role="status" hidden><span class="spinner"></span><div><strong id="progress-title">正在准备导出</strong><small id="progress-message">保留当前纹理，请稍候…</small></div></div>
   <aside id="inspector" class="context-card" hidden aria-label="快捷调节浮窗"><header class="context-card-head" id="inspector-grip"><div><small class="context-eyebrow">QUICK CONTROL</small><h2>油墨调节</h2></div><button class="context-close" id="inspector-close" aria-label="关闭快捷调节"><span data-icon="close"></span></button></header><div class="context-card-body"><div id="quick-ranges"></div><div id="quick-ink-color"></div><button class="secondary full" id="quick-reseed"><span data-icon="shuffle"></span>换一版纹理</button></div></aside>
 </div>
+<script src="layout-diagnostics.js" defer></script>
 <script type="module" src="app.js"></script>
 </body>
 </html>
