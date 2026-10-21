@@ -249,7 +249,7 @@ $('#reset').onclick = () => {
 };
 
 function panel(name) {
-  $('#edit-panel').hidden = name !== 'edit'; $('#export-panel').hidden = name !== 'export';
+  $('#ink-edit-panel').hidden = name !== 'edit'; $('#ink-export-panel').hidden = name !== 'export';
   for (const key of ['edit','export']) { $('#' + key + '-tab').classList.toggle('active', key === name); $('#' + key + '-tab').setAttribute('aria-selected', String(key === name)); }
   $('#ink-controls-scroll').scrollTop = 0;
   updateGeometryOverlay();
@@ -647,7 +647,7 @@ function syncGeometrySelection(){
   $('#geometry-selected-controls').hidden=selected<0;updateGeometryOverlay();
 }
 function updateGeometryOverlay(){
-  const index=selectedGeometryIndex(),show=index>=0&&state.source==='draw'&&drawTool==='select'&&!$('#edit-panel').hidden&&!compare&&!currentStroke&&!hand&&!space;
+  const index=selectedGeometryIndex(),show=index>=0&&state.source==='draw'&&drawTool==='select'&&!$('#ink-edit-panel').hidden&&!compare&&!currentStroke&&!hand&&!space;
   geometryOverlay.hidden=!show;if(!show)return;
   const mark=strokes[index],g=geometryOf(mark,state.canvasWidth,state.canvasHeight),rect=artworkScreenRect(),viewRect=viewport.getBoundingClientRect();
   if(!g)return;

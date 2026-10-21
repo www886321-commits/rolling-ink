@@ -27,9 +27,9 @@ const reports=[];
 const ready=async page=>{await page.waitForTimeout(250);await page.waitForFunction(()=>{const s=document.querySelector('#render-status');return s&&!s.classList.contains('busy')&&!s.textContent.includes('正在');},null,{timeout:120000});assert.doesNotMatch(await page.locator('#render-status').textContent(),/失败|不可用/);};
 async function layout(page,width,height){
  await page.setViewportSize({width,height});await ready(page);
- const result=await page.evaluate(()=>{const box=selector=>{const r=document.querySelector(selector).getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height}};return{workspace:getComputedStyle(document.querySelector('.workspace')).display,settings:box('.side-panel'),sidebar:box('#ink-controls-scroll'),stage:box('.stage'),canvas:box('#canvas-wrap'),art:box('#artwork'),overflow:document.documentElement.scrollWidth>innerWidth}});
+ const result=await page.evaluate(()=>{const box=selector=>{const r=document.querySelector(selector).getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height}};return{workspace:getComputedStyle(document.querySelector('.workspace')).display,settings:box('.side-panel'),sidebar:box('#ink-controls-scroll'),sourceCard:box('#source-card'),stage:box('.stage'),canvas:box('#canvas-wrap'),art:box('#artwork'),overflow:document.documentElement.scrollWidth>innerWidth}});
  const minimum=width>900?200:150;
- assert.equal(result.overflow,false);assert.ok(result.sidebar.width<=result.settings.width+1,'settings content escaped its column');assert.ok(result.sidebar.x>=result.settings.x-1,'settings content escaped left edge');assert.ok(result.stage.height>=300);assert.ok(result.canvas.width>minimum&&result.canvas.height>minimum);assert.ok(result.art.width>minimum&&result.art.height>minimum);
+ assert.equal(result.overflow,false);assert.ok(result.sidebar.width<=result.settings.width+1,'settings content escaped its column');assert.ok(result.sourceCard.width<=result.settings.width+1,'edit panel became a page-wide overlay');assert.ok(result.sidebar.x>=result.settings.x-1,'settings content escaped left edge');assert.ok(result.stage.height>=300);assert.ok(result.canvas.width>minimum&&result.canvas.height>minimum);assert.ok(result.art.width>minimum&&result.art.height>minimum);
  if(width>900){assert.equal(result.workspace,'grid');assert.ok(result.stage.x>=350&&result.stage.x<355);assert.ok(result.canvas.y>=0&&result.canvas.y<height);}
  return result;
 }
@@ -63,6 +63,9 @@ try{
    await page.waitForTimeout(800);await layout(page,1440,1000);assert.equal((await hash(page)).hash,stamp.hash);
    await page.locator('#late-layout-overrides').evaluate(e=>{e.textContent='.sidebar-content,#sidebar-scroll,.ink-controls-scroll,#ink-controls-scroll{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;transform:translate(0,0)!important;z-index:9999!important}';});
    await page.waitForTimeout(300);await layout(page,1440,1000);
+   await page.locator('#late-layout-overrides').evaluate(e=>{e.className='mpa-style-fix SideFunctionPanel';e.textContent='#edit-panel{position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999}';});
+   await page.waitForTimeout(300);await layout(page,2552,1282);await layout(page,1440,1000);
+   assert.equal(await page.locator('#edit-panel, #export-panel').count(),0);
    await page.locator('#late-layout-overrides').evaluate(e=>e.remove());
    await page.click('[data-mode="roller"]');await ready(page);assert.equal(await page.locator('#roller-texture option').count(),13);assert.notEqual((await hash(page)).hash,stamp.hash);
    await page.screenshot({path:path.join(out,`${name}-desktop.png`),fullPage:true});
@@ -86,7 +89,7 @@ try{
    if(!live){const fallbackPage=await browser.newPage({viewport:{width:1440,height:1000}});fallbackPage.on('pageerror',e=>errors.push('fallback: '+e.message));await fallbackPage.addInitScript(()=>{window.ResizeObserver=undefined;});await fallbackPage.route('**/rolling-ink/',async route=>{const html=(await readFile(path.join(site,'index.html'),'utf8')).replace(/(?:min-|max-)?height\s*:[^;{}]*dvh[^;{}]*;?/g,'');await route.fulfill({contentType:'text/html',body:html});});await fallbackPage.goto(base);await ready(fallbackPage);fallback=await layout(fallbackPage,1440,1000);await layout(fallbackPage,390,844);await fallbackPage.close();}
    if(!live){const diagnosticPage=await browser.newPage();await diagnosticPage.goto(base+'?diagnose=1');await ready(diagnosticPage);assert.equal(await diagnosticPage.getByRole('button',{name:'复制布局诊断'}).isVisible(),true);const diagnostic=await diagnosticPage.evaluate(()=>window.__rollingInkLayoutDiagnostics.report());assert.equal(diagnostic.history.at(-1).layout.workspace.display,'grid');assert.ok(diagnostic.matchingLayoutRules.length>0);await diagnosticPage.close();}
    assert.deepEqual(errors,[]);assert.deepEqual(failed,[]);
-   const report={browser:name,version:browser.version(),delayedGenericStyleOverrides:true,passed:true,url:base,desktop,wide,mobile,externalCSSUnavailable:true,originalScanPixelsUnchanged:scanPixels,stamp:true,roller:true,fonts:true,image:true,drawAndFixedTransformHandles:true,png:[1024,683],svgPaths:true,viewportAndResizeFallback:!!fallback,errors,failed};reports.push(report);console.log(JSON.stringify(report));
+   const report={browser:name,version:browser.version(),delayedGenericStyleOverrides:true,actualExtensionPanelCollision:true,passed:true,url:base,desktop,wide,mobile,externalCSSUnavailable:true,originalScanPixelsUnchanged:scanPixels,stamp:true,roller:true,fonts:true,image:true,drawAndFixedTransformHandles:true,png:[1024,683],svgPaths:true,viewportAndResizeFallback:!!fallback,errors,failed};reports.push(report);console.log(JSON.stringify(report));
   }catch(error){if(page)await page.screenshot({path:path.join(out,`${name}-failure.png`),fullPage:true}).catch(()=>{});const report={browser:name,passed:false,error:error.stack,errors,failed};reports.push(report);console.error(JSON.stringify(report));}
   finally{await browser?.close();}
  }

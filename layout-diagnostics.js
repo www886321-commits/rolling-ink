@@ -7,7 +7,7 @@
     settings: '#ink-settings, .side-panel', stage: '#ink-stage, .stage',
     sidebarContent: '#ink-controls-scroll, #sidebar-scroll', sourceCard: '#source-card',
     textSource: '#text-source', textInput: '#text-input', topbar: '#ink-topbar, .topbar',
-    tabs: '#ink-tabs, .sidebar-tabs', editPanel: '#edit-panel',
+    tabs: '#ink-tabs, .sidebar-tabs', editPanel: '#ink-edit-panel, #edit-panel', exportPanel: '#ink-export-panel, #export-panel',
     viewport: '#viewport', canvas: '#canvas-wrap', artwork: '#artwork'
   };
   function state() {
@@ -45,7 +45,7 @@
         if (rule.cssRules && !rule.selectorText) { walk(rule.cssRules, source); continue; }
         if (!rule.selectorText || !rule.style) continue;
         const matched = Object.entries(targets).filter(([, selector]) => { try { return document.querySelector(selector)?.matches(rule.selectorText); } catch { return false; } }).map(([name]) => name);
-        const legacyControlSelector = /\.sidebar-content\b|#sidebar-scroll\b/.test(rule.selectorText);
+        const legacyControlSelector = /\.sidebar-content\b|#sidebar-scroll\b|#(?:edit|export)-panel\b/.test(rule.selectorText);
         if (!matched.length && !legacyControlSelector) continue;
         const declarations = {};
         for (const property of props) { const value = rule.style.getPropertyValue(property); if (value) declarations[property] = value + (rule.style.getPropertyPriority(property) ? ' !important' : ''); }
@@ -62,7 +62,7 @@
   function report() {
     sample('copy');
     return {
-      tool: 'rolling-ink', diagnosticVersion: 2, browser: navigator.userAgent,
+      tool: 'rolling-ink', diagnosticVersion: 3, browser: navigator.userAgent,
       engineFeatures: { grid: CSS.supports('display', 'grid'), dvh: CSS.supports('height', '100dvh'), resizeObserver: typeof ResizeObserver === 'function' },
       sheets: [...document.styleSheets].map((sheet, index) => ({ index, disabled: sheet.disabled, external: !!sheet.href, owner:{tag:sheet.ownerNode?.tagName,id:sheet.ownerNode?.id,class:sheet.ownerNode?.className} })),
       history, matchingLayoutRules: matchingRules()
