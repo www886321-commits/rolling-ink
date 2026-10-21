@@ -23,7 +23,7 @@ button { cursor: pointer; }
 .sidebar-tabs { display: grid; grid-template-columns: 1fr 1fr; flex-shrink: 0; }
 .sidebar-tabs button { height: 40px; padding: 0; background: transparent; color: var(--ui-muted); border: 0; border-bottom: 1px solid var(--ui-line); }
 .sidebar-tabs button.active { color: var(--ui-text); border-bottom-color: var(--ui-text); font-weight: 600; }
-.sidebar-content { flex: 1; min-height: 0; overflow: auto; scrollbar-width: thin; scrollbar-color: var(--ui-line-strong) transparent; }
+.ink-controls-scroll { flex: 1; min-height: 0; overflow: auto; scrollbar-width: thin; scrollbar-color: var(--ui-line-strong) transparent; }
 .panel-fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
 .control-section > label:not([class]), .export-card-title { font-family: 'PlixTitles', 'Microsoft YaHei', sans-serif; }
 .primary, .secondary, .canvas-fit, .canvas-nav, .context-toggle, .segment button, .ratio-grid button, .repair-actions button, .mask-history-actions button, .mask-target-switch button, .mask-finish { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 34px; padding: 8px 10px; border: 1px solid var(--ui-line); border-radius: 0; background: transparent; color: var(--ui-text); box-shadow: none; }
@@ -89,7 +89,7 @@ button, a, select { transition: color 140ms ease, background-color 140ms ease, b
   .workspace { grid-template-columns: minmax(0, 1fr); height: auto; }
   .side-panel { border: 1px solid var(--ui-frame); background: var(--ui-sidebar); }
   .topbar, .sidebar-tabs, .sidebar-footer { padding: 14px; background: var(--ui-panel); }
-  .sidebar-content { padding: 12px 14px; }
+  .ink-controls-scroll { padding: 12px 14px; }
   .app-shell .control-section { padding: 14px; margin-bottom: 12px; background: var(--ui-panel); border: 1px solid var(--ui-frame); }
   .control-section > label:not([class]) { display: block; margin-bottom: 12px; color: var(--ui-text); font-weight: 600; }
   .stage { padding: 16px; }
@@ -122,7 +122,7 @@ button, a, select { transition: color 140ms ease, background-color 140ms ease, b
   .topbar, .sidebar-tabs, .sidebar-footer { background: var(--ui-panel); }
   .topbar { padding: 22px 18px 16px; }
   .sidebar-tabs { padding: 0 18px; border-bottom: 1px solid var(--ui-frame); }
-  .sidebar-content { padding: 12px 14px 20px; background: var(--ui-sidebar); }
+  .ink-controls-scroll { padding: 12px 14px 20px; background: var(--ui-sidebar); }
   .app-shell .control-section { margin: 0 0 12px; padding: 14px; border: 1px solid var(--ui-frame); background: var(--ui-panel); }
   .app-shell .control-section > label:not([class]) { display: block; margin: -14px -14px 14px; padding: 11px 14px; border-bottom: 1px solid var(--ui-line); color: var(--ui-text); font-size: 12px; font-weight: 600; line-height: 1.5; letter-spacing: .02em; }
   .control-section > :last-child { margin-bottom: 0; }

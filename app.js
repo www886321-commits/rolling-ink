@@ -251,7 +251,7 @@ $('#reset').onclick = () => {
 function panel(name) {
   $('#edit-panel').hidden = name !== 'edit'; $('#export-panel').hidden = name !== 'export';
   for (const key of ['edit','export']) { $('#' + key + '-tab').classList.toggle('active', key === name); $('#' + key + '-tab').setAttribute('aria-selected', String(key === name)); }
-  $('#sidebar-scroll').scrollTop = 0;
+  $('#ink-controls-scroll').scrollTop = 0;
   updateGeometryOverlay();
 }
 $('#edit-tab').onclick = () => panel('edit'); $('#export-tab').onclick = () => panel('export'); $('#quick-export').onclick = () => panel('export');

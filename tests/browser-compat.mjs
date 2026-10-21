@@ -27,9 +27,9 @@ const reports=[];
 const ready=async page=>{await page.waitForTimeout(250);await page.waitForFunction(()=>{const s=document.querySelector('#render-status');return s&&!s.classList.contains('busy')&&!s.textContent.includes('正在');},null,{timeout:120000});assert.doesNotMatch(await page.locator('#render-status').textContent(),/失败|不可用/);};
 async function layout(page,width,height){
  await page.setViewportSize({width,height});await ready(page);
- const result=await page.evaluate(()=>{const box=selector=>{const r=document.querySelector(selector).getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height}};return{workspace:getComputedStyle(document.querySelector('.workspace')).display,stage:box('.stage'),canvas:box('#canvas-wrap'),art:box('#artwork'),overflow:document.documentElement.scrollWidth>innerWidth}});
+ const result=await page.evaluate(()=>{const box=selector=>{const r=document.querySelector(selector).getBoundingClientRect();return{x:r.x,y:r.y,width:r.width,height:r.height}};return{workspace:getComputedStyle(document.querySelector('.workspace')).display,settings:box('.side-panel'),sidebar:box('#ink-controls-scroll'),stage:box('.stage'),canvas:box('#canvas-wrap'),art:box('#artwork'),overflow:document.documentElement.scrollWidth>innerWidth}});
  const minimum=width>900?200:150;
- assert.equal(result.overflow,false);assert.ok(result.stage.height>=300);assert.ok(result.canvas.width>minimum&&result.canvas.height>minimum);assert.ok(result.art.width>minimum&&result.art.height>minimum);
+ assert.equal(result.overflow,false);assert.ok(result.sidebar.width<=result.settings.width+1,'settings content escaped its column');assert.ok(result.sidebar.x>=result.settings.x-1,'settings content escaped left edge');assert.ok(result.stage.height>=300);assert.ok(result.canvas.width>minimum&&result.canvas.height>minimum);assert.ok(result.art.width>minimum&&result.art.height>minimum);
  if(width>900){assert.equal(result.workspace,'grid');assert.ok(result.stage.x>=350&&result.stage.x<355);assert.ok(result.canvas.y>=0&&result.canvas.y<height);}
  return result;
 }
@@ -61,6 +61,8 @@ try{
    // Reproduce a normal first paint followed by generic styles inserted after load.
    await page.evaluate(()=>setTimeout(()=>{const style=document.createElement('style');style.id='late-layout-overrides';style.textContent='main{display:block!important}.stage{display:none!important;height:0!important}.side-panel{display:block!important;height:auto!important;overflow:visible!important}.app-shell{height:auto!important;overflow:visible!important}';document.head.append(style);},500));
    await page.waitForTimeout(800);await layout(page,1440,1000);assert.equal((await hash(page)).hash,stamp.hash);
+   await page.locator('#late-layout-overrides').evaluate(e=>{e.textContent='.sidebar-content,#sidebar-scroll,.ink-controls-scroll,#ink-controls-scroll{position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;transform:translate(0,0)!important;z-index:9999!important}';});
+   await page.waitForTimeout(300);await layout(page,1440,1000);
    await page.locator('#late-layout-overrides').evaluate(e=>e.remove());
    await page.click('[data-mode="roller"]');await ready(page);assert.equal(await page.locator('#roller-texture option').count(),13);assert.notEqual((await hash(page)).hash,stamp.hash);
    await page.screenshot({path:path.join(out,`${name}-desktop.png`),fullPage:true});
