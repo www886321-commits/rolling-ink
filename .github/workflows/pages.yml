@@ -13,14 +13,23 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v6
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
       - uses: actions/configure-pages@v5
+      - run: npm ci
       - run: npm test
       - run: npm run build:web
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run test:browsers
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: browser-compatibility-failures
+          path: verification/browser-compat
       - uses: actions/upload-pages-artifact@v4
         with:
           path: site

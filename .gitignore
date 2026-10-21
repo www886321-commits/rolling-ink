@@ -8,6 +8,7 @@
 /scripts/
 /tests/*
 !/tests/*.test.mjs
+!/tests/browser-compat.mjs
 node_modules/
 .env
 .env.*

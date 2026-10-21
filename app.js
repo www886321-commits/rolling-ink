@@ -1,3 +1,4 @@
+import { inkMapFromImage } from './raster.js';
 import { render, clamp } from './engine.js';
 import { ROLLER_TEXTURES } from './roller-assets.js';
 import { BUILTIN_FONTS } from './font-assets.js';
@@ -99,17 +100,8 @@ function originalRollerURL(item){
 async function ensureRoller(id){
   if(!rollerCache.has(id))rollerCache.set(id,(async()=>{
     const item=ROLLER_TEXTURES.find(t=>t.id===id)||ROLLER_TEXTURES[0],img=new Image();img.src=await originalRollerURL(item);await img.decode();
-    const {left,top,width,height}=item.crop;
-    const canvas=document.createElement('canvas');canvas.width=width;canvas.height=height;
-    const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(img,left,top,width,height,0,0,width,height);
-    const rgba=ctx.getImageData(0,0,canvas.width,canvas.height).data,data=new Uint8Array(canvas.width*canvas.height);
-    for(let i=0;i<data.length;i++)data[i]=255-rgba[i*4];
-    const lowCanvas=document.createElement('canvas');lowCanvas.width=48;lowCanvas.height=Math.round(48*canvas.height/canvas.width);
-    const lowCtx=lowCanvas.getContext('2d',{willReadFrequently:true});lowCtx.drawImage(canvas,0,0,lowCanvas.width,lowCanvas.height);
-    const lowRGBA=lowCtx.getImageData(0,0,lowCanvas.width,lowCanvas.height).data,lowData=new Uint8Array(lowCanvas.width*lowCanvas.height);
-    for(let i=0;i<lowData.length;i++)lowData[i]=255-lowRGBA[i*4];
-    const map={id:item.id,width:canvas.width,height:canvas.height,data,low:{width:lowCanvas.width,height:lowCanvas.height,data:lowData}};
-    canvas.width=canvas.height=0;img.src='';return map;
+    const map={id:item.id,...inkMapFromImage(img,item.crop)};
+    img.src='';return map;
   })());
   const promise=rollerCache.get(id);rollerCache.delete(id);rollerCache.set(id,promise);
   while(rollerCache.size>2)rollerCache.delete(rollerCache.keys().next().value);
@@ -627,7 +619,10 @@ function zoomTo(value,clientX,clientY) {
 $('#fit').onclick=()=>updateFit(true);$('#zoom-in').onclick=()=>zoomTo(zoom*1.25);$('#zoom-out').onclick=()=>zoomTo(zoom/1.25);
 $('#pan').onclick=()=>{hand=!hand;active($('#pan'),hand);updateTransform();};
 viewport.addEventListener('wheel',e=>{e.preventDefault();if(!geometryGesture&&!currentStroke)zoomTo(zoom*Math.exp(-e.deltaY*.0015),e.clientX,e.clientY);},{passive:false});
-new ResizeObserver(()=>updateFit()).observe(viewport);
+if(typeof ResizeObserver==='function')new ResizeObserver(()=>updateFit()).observe(viewport);
+else window.addEventListener('resize',()=>updateFit());
+// Zoom, display scaling and mobile browser chrome may resize the visual viewport.
+window.visualViewport?.addEventListener('resize',()=>updateFit());
 function setCompare(value){compare=value;active($('#compare'),value);original.hidden=!value;$('.compare-badge').hidden=!value;detailArt.hidden=!detailValid||value;detailOriginal.hidden=!detailValid||!value;updateGeometryOverlay();}
 $('#compare').onclick=()=>setCompare(!compare);
 let view='paper';
@@ -813,5 +808,8 @@ window.addEventListener('resize',clampInspector);
 
 function modeSamples(){for(const mode of ['stamp','roller']){const c=$('#'+mode+'-sample'),ctx=c.getContext('2d');ctx.fillStyle='#000';ctx.fillRect(3,3,c.width-6,c.height-6);const data=ctx.getImageData(0,0,c.width,c.height);const result=render(data.data,c.width,c.height,{...defaults,...modeDefaults[mode],source:'draw',mode,ink:'#287fb0',background:'paper'});ctx.putImageData(new ImageData(result.pixels,c.width,c.height),0,0);}}
 sync();modeSamples();
-ensureRoller(defaults.rollerTexture).then(map=>{const c=$('#roller-sample'),ctx=c.getContext('2d'),p=new Uint8ClampedArray(c.width*c.height*4);for(let i=3;i<p.length;i+=4)p[i]=255;const result=render(p,c.width,c.height,{...defaults,...modeDefaults.roller,source:'draw',mode:'roller',rollerMap:map,background:'paper'});ctx.putImageData(new ImageData(result.pixels,c.width,c.height),0,0);}).catch(()=>{});
+(async()=>{
+ const item=ROLLER_TEXTURES.find(t=>t.id===defaults.rollerTexture),image=new Image();image.src=item.src;await image.decode();
+ const map=inkMapFromImage(image,{left:0,top:0,width:item.width,height:item.height});image.src='';return map;
+})().then(map=>{const c=$('#roller-sample'),ctx=c.getContext('2d'),p=new Uint8ClampedArray(c.width*c.height*4);for(let i=3;i<p.length;i+=4)p[i]=255;const result=render(p,c.width,c.height,{...defaults,...modeDefaults.roller,source:'draw',mode:'roller',rollerMap:map,background:'paper'});ctx.putImageData(new ImageData(result.pixels,c.width,c.height),0,0);}).catch(()=>{});
 document.fonts.ready.then(()=>schedulePreview());

@@ -196,7 +196,7 @@ details[open] > summary .when-closed { display:none; }
 @media (max-width:1100px) and (min-width:901px) { .canvas-view-controls { gap:2px; } .canvas-fit span:last-child { display:none; } .stage-meta { gap:3px; } }
 @media (max-width:900px) {
   .workspace { display:flex; flex-direction:column; }
-  .stage { order:-1; height:58dvh; min-height:380px; padding:12px; flex:none; }
+  .stage { order:-1; height:58vh; height:58dvh; min-height:380px; padding:12px; flex:none; }
   .side-panel { height:auto; border-top:1px solid var(--ui-frame); }
   .topbar { padding:18px 14px 14px; }
   .subtitle { margin-top:-19px; }

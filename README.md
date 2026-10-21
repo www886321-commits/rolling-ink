@@ -26,9 +26,17 @@
 
 内置 12 款中文／日文字体与 13 款英文开放字体，选择后按需载入。其他 14 款英文目录项需点击「载入本机英文字体文件夹」选择自己的原字体文件，不会上传字体。界面会显示商用／非商用及相应依据，作品用途仍需遵守字体许可。大字体与高清肌理首次载入时间取决于网络。
 
+## 浏览器兼容
+
+以当前 Chrome、Microsoft Edge、Firefox 和 Safari/WebKit 为兼容目标。高清扫描分段读取，保留原像素并降低载入峰值。页面内置布局样式，脚本按内容版本加载，避免样式缺失或旧缓存混用造成画布不可见；不支持动态视口单位或 ResizeObserver 时使用后备尺寸处理。
+
+已在 Windows 的独立 Edge、Chrome、Firefox 和 WebKit 测试实例验证桌面、3813 × 1863 宽屏、手机尺寸、两种效果、字体、图片、手绘、自由变换控制点及 PNG／SVG 导出。WebKit 测试不等同于在真实 macOS／iOS Safari 设备上验收。
+
+自动发布前运行 Chromium、Firefox、WebKit 浏览器回归，并模拟外部 CSS 不可用、动态视口单位和 ResizeObserver 不可用的情况。
+
 ## 本地运行
 
-需要 Node.js 22 或更新版本，无须安装第三方依赖。
+需要 Node.js 22 或更新版本，运行工具无须安装第三方依赖。浏览器回归需要先运行 `npm ci` 和 `npx playwright install chromium firefox webkit`，再运行 `npm run test:browsers`。
 
 ```sh
 npm start

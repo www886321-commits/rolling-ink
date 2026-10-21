@@ -8,6 +8,7 @@ const fonts=[...ui.matchAll(/url\('\.\/fonts\/([^']+)'\)/g)];
 for(const [,name]of fonts){const bytes=await readFile(path.join(root,'assets/fonts',name));ui=ui.replace(`url('./fonts/${name}')`,`url('data:font/woff2;base64,${bytes.toString('base64')}')`);}
 const engine=(await read('engine.js')).replace(/^export /gm,'');
 const drawing=(await read('drawing.js')).replace(/^export /gm,'');
+const raster=(await read('raster.js')).replace(/^export /gm,'');
 const worker=(await read('worker.js')).replace(/^import .*?;\s*/,'');
 let app=(await read('app.js')).replace(/^import .*?;\s*/gm,'');
 const {ROLLER_TEXTURES}=await import('./roller-assets.js');
@@ -18,7 +19,7 @@ for(const item of ROLLER_TEXTURES){const bytes=await readFile(path.join(root,ite
 app=app.replaceAll("new URL('./worker.js', import.meta.url)",'inkWorkerURL').replaceAll("new URL('./worker.js',import.meta.url)",'inkWorkerURL');
 // Local file origins support self-contained classic Blob workers consistently.
 app=app.replace(/\{\s*type:\s*'module'\s*\}/g,'{}');
-const code=`${engine}\n${drawing}\nconst ROLLER_TEXTURES=${JSON.stringify(embeddedRollers)};\nconst BUILTIN_FONTS=${JSON.stringify(BUILTIN_FONTS)};\nconst ENGLISH_FONTS=${JSON.stringify(ENGLISH_FONTS)};\nconst inkWorkerURL=URL.createObjectURL(new Blob([${JSON.stringify(engine+'\n'+worker)}],{type:'text/javascript'}));\n${app}`;
+const code=`${engine}\n${drawing}\n${raster}\nconst ROLLER_TEXTURES=${JSON.stringify(embeddedRollers)};\nconst BUILTIN_FONTS=${JSON.stringify(BUILTIN_FONTS)};\nconst ENGLISH_FONTS=${JSON.stringify(ENGLISH_FONTS)};\nconst inkWorkerURL=URL.createObjectURL(new Blob([${JSON.stringify(engine+'\n'+worker)}],{type:'text/javascript'}));\n${app}`;
 let html=await read('index.html');
 html=html.replace('<link rel="stylesheet" href="assets/ui.css">',`<style>${ui}</style>`).replace('<link rel="stylesheet" href="style.css">',`<style>${await read('style.css')}</style>`);
 const favicon=Buffer.from(await read('assets/favicon.svg')).toString('base64');
