@@ -1,0 +1,29 @@
+Name 0:
+Copyright (c) 2011, Cyreal (www.cyreal.org)with Reserved Font Name "Bonbon".This Font Software is licensed under the SIL Open Font License,Version 1.1. This license is available with a FAQ at:http://scripts.sil.org/OFL
+
+Name 1:
+Bonbon
+
+Name 2:
+Regular
+
+Name 4:
+Bonbon Regular
+
+Name 5:
+Version 1.001
+
+Name 6:
+Bonbon-Regular
+
+Name 8:
+Cyreal (www.cyreal.org)
+
+Name 9:
+Ksenia Erulevich
+
+Name 13:
+Copyright (c) 2011, Cyreal (www.cyreal.org)with Reserved Font Name "Bonbon".This Font Software is licensed under the SIL Open Font License,Version 1.1. This license is available with a FAQ at:http://scripts.sil.org/OFL
+
+Name 14:
+http://scripts.sil.org/OFL

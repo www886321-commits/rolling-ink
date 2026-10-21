@@ -1,0 +1,29 @@
+Name 0:
+Copyright (c) 2012, Brownfox (gayaneh.b@gmail.com), with Reserved Font Name "Henny Penny"
+
+Name 1:
+Henny Penny
+
+Name 2:
+Regular
+
+Name 4:
+Henny Penny
+
+Name 5:
+Version 1.001
+
+Name 6:
+HennyPenny-Regular
+
+Name 8:
+Brownfox
+
+Name 9:
+Olga Umpeleva
+
+Name 13:
+This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL
+
+Name 14:
+http://scripts.sil.org/OFL

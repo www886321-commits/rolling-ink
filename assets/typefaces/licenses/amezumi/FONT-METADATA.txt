@@ -1,0 +1,29 @@
+Name 0:
+Copyright 2025 LavsicDesign | Copyright 2020 The Dela Gothic Project Authors (https://github.com/syakuzen/DelaGothic)
+
+Name 1:
+雨墨ゴシック R
+
+Name 2:
+Regular
+
+Name 4:
+雨墨ゴシック
+
+Name 5:
+Version 1.000
+
+Name 6:
+AmezumiGothic
+
+Name 8:
+LavsicDesign
+
+Name 9:
+LavsicDesign
+
+Name 13:
+This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://scripts.sil.org/OFL
+
+Name 14:
+https://scripts.sil.org/OFL

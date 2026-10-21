@@ -1,0 +1,29 @@
+Name 0:
+Copyright 2008 The Ole Project Authors (https://github.com/googlefonts/ole)
+
+Name 1:
+Ole
+
+Name 2:
+Regular
+
+Name 4:
+Ole Regular
+
+Name 5:
+Version 1.010; ttfautohint (v1.8.3)
+
+Name 6:
+Ole-Regular
+
+Name 8:
+Robert E. Leuschke
+
+Name 9:
+Robert E. Leuschke
+
+Name 13:
+This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://scripts.sil.org/OFL
+
+Name 14:
+https://scripts.sil.org/OFL

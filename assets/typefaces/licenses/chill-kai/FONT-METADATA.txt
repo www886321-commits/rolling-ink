@@ -1,0 +1,29 @@
+Name 0:
+Copyright (c) 2026, Warren2060. Kataoka Yuji {片岡佑之}.
+
+Name 1:
+寒蝉拙楷体 R
+
+Name 2:
+Regular
+
+Name 4:
+寒蝉拙楷体
+
+Name 5:
+Version 1.270;Glyphs 3.5 (3528)
+
+Name 6:
+ChillZhuoKai
+
+Name 8:
+ChillType
+
+Name 9:
+Warren20260. Kataoka Yuji {片岡佑之}.
+
+Name 13:
+This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://scripts.sil.org/OFL
+
+Name 14:
+https://scripts.sil.org/OFL

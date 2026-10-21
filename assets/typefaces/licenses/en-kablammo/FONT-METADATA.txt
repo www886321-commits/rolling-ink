@@ -1,0 +1,29 @@
+Name 0:
+Copyright 2023 The Kablammo Project Authors (https://github.com/Vectro-Type-Foundry/kablammo)
+
+Name 1:
+Kablammo
+
+Name 2:
+Regular
+
+Name 4:
+Kablammo Regular
+
+Name 5:
+Version 1.002
+
+Name 6:
+Kablammo-Regular
+
+Name 8:
+Vectro Type Foundry
+
+Name 9:
+Travis Kochel, Lizy Gershenzon, Daria Petrova, Ethan Cohen
+
+Name 13:
+This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://scripts.sil.org/OFL
+
+Name 14:
+https://scripts.sil.org/OFL

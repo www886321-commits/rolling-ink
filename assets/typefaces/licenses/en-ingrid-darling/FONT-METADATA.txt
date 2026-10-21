@@ -1,0 +1,29 @@
+Name 0:
+Copyright 2014-2021 The Ingrid Darling Project Authors (https://github.com/googlefonts/ingrid-darling)
+
+Name 1:
+Ingrid Darling
+
+Name 2:
+Regular
+
+Name 4:
+Ingrid Darling Regular
+
+Name 5:
+Version 1.010; ttfautohint (v1.8.3)
+
+Name 6:
+IngridDarling-Regular
+
+Name 8:
+Robert E. Leuschke
+
+Name 9:
+Robert E. Leuschke
+
+Name 13:
+This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://scripts.sil.org/OFL
+
+Name 14:
+https://scripts.sil.org/OFL

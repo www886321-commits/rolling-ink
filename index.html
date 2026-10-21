@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh-CN" data-ui-theme="ivory">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="滚墨印记：文字与图片的干墨、滚印效果工具。素材在本机处理，支持透明 PNG 与路径 SVG。">
+  <title>滚墨印记 — 文字与图片的干墨、滚印效果工具</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/ui.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="root" class="app-shell">
+  <main class="workspace">
+    <aside class="side-panel" aria-label="工具设置">
+      <header class="topbar">
+        <div class="brand"><span>滚墨印记</span><small>INK / 01</small></div>
+        <p class="subtitle">文字与图片的干墨、滚印效果工具</p>
+        <div class="source-switch segment" aria-label="素材类型">
+          <button class="active" data-source="text" aria-pressed="true"><span data-icon="type"></span>文字</button>
+          <button data-source="image" aria-pressed="false"><span data-icon="image"></span>图片</button>
+          <button data-source="draw" aria-pressed="false"><span data-icon="pen"></span>手绘</button>
+        </div>
+      </header>
+      <nav class="sidebar-tabs" aria-label="工作面板">
+        <button id="edit-tab" class="active" aria-selected="true" role="tab">编辑</button>
+        <button id="export-tab" aria-selected="false" role="tab">导出</button>
+      </nav>
+      <div class="sidebar-content" id="sidebar-scroll">
+        <div id="edit-panel">
+          <section class="control-section" id="source-card">
+            <h2 class="section-title"><span>素材</span><small id="source-kind">TEXT</small></h2>
+            <div id="text-source">
+              <textarea id="text-input" aria-label="输入文字" maxlength="400" spellcheck="false">滚墨
+印记</textarea>
+              <div class="row tiny muted"><span>支持多行 · 中英文</span><span id="text-count">4 / 400</span></div>
+              <div id="type-details" class="typography-controls"><h3 class="subsection-title"><span>字体与字形</span><small>参数已展开</small></h3>
+                <div class="detail-body">
+                  <label class="select-label">字体<select id="font-family" aria-label="字体"><option value="sans">黑体 · Sans</option><option value="serif">宋体 · Serif</option><option value="mono">等宽 · Mono</option></select></label>
+                  <p id="font-note" class="control-note" aria-live="polite">内置字体选中后载入，每款保留一个常用字重。</p>
+                  <p id="font-license-note" class="control-note font-license-note" hidden></p>
+                  <a id="font-license-link" class="font-license-link" target="_blank" rel="noopener noreferrer" hidden>查看作者授权说明 ↗</a>
+                  <button id="load-local-typefaces" class="secondary full compact" hidden>载入本机英文字体文件夹</button>
+                  <input id="local-typefaces-files" type="file" webkitdirectory multiple hidden>
+                  <button id="retry-font" class="secondary full compact" hidden>重新载入字体</button>
+                  <button class="secondary full compact" id="upload-font"><span data-icon="upload"></span>上传本地字体</button>
+                  <input type="file" id="font-file" accept=".ttf,.otf,.woff,.woff2" hidden>
+                  <div id="type-ranges"></div>
+                  <p class="control-note">自动适配画面。圆角为 0 时保留字体原始转角。</p>
+                </div>
+              </div>
+            </div>
+            <div id="image-source" hidden>
+              <button id="upload-image" class="upload-zone"><span data-icon="upload"></span><strong>选择图片，或拖到这里</strong><small>PNG / JPG / WEBP / SVG · 最大 30 MB</small></button>
+              <input type="file" id="image-file" accept="image/png,image/jpeg,image/webp,image/avif,image/svg+xml" hidden>
+              <div id="image-info" hidden><img id="image-thumb" alt="已上传图片"><div><strong id="image-name"></strong><small id="image-size"></small></div><button class="icon-button" id="replace-image" aria-label="替换图片"><span data-icon="upload"></span></button></div>
+              <div class="segment image-method"><button data-method="tone" class="active" aria-pressed="true">保留明暗</button><button data-method="silhouette" aria-pressed="false">剪影印记</button></div>
+              <div id="image-ranges"></div>
+              <label class="check-control"><input id="invert" type="checkbox">反转明暗</label>
+              <p class="control-note">透明图形保留轮廓；照片根据明暗提取印色。</p>
+            </div>
+            <div id="draw-source" hidden>
+              <button class="secondary full compact" data-draw-tool="select" aria-pressed="false"><span data-icon="select"></span>选择 / 自由变换 <span class="tool-shortcut">V</span></button>
+              <div class="segment draw-brush-tools"><button data-draw-tool="pen" class="active" aria-pressed="true"><span data-icon="pen"></span>画笔</button><button data-draw-tool="eraser" aria-pressed="false"><span data-icon="eraser"></span>橡皮擦</button></div>
+              <h3 class="subsection-title"><span>图形</span><small>拖拽绘制</small></h3>
+              <div class="draw-shape-grid" role="group" aria-label="图形工具">
+                <button data-draw-tool="rect" aria-pressed="false"><span data-icon="shapeRect"></span>矩形</button>
+                <button data-draw-tool="roundRect" aria-pressed="false"><span data-icon="shapeRoundRect"></span>圆角矩形</button>
+                <button data-draw-tool="circle" aria-pressed="false"><span data-icon="shapeCircle"></span>圆形</button>
+                <button data-draw-tool="ellipse" aria-pressed="false"><span data-icon="shapeEllipse"></span>椭圆</button>
+                <button data-draw-tool="triangle" aria-pressed="false"><span data-icon="shapeTriangle"></span>三角形</button>
+                <button data-draw-tool="diamond" aria-pressed="false"><span data-icon="shapeDiamond"></span>菱形</button>
+                <button data-draw-tool="star" aria-pressed="false"><span data-icon="shapeStar"></span>五角星</button>
+                <button data-draw-tool="heart" aria-pressed="false"><span data-icon="shapeHeart"></span>爱心</button>
+              </div>
+              <div id="shape-settings" hidden>
+                <div class="segment" role="group" aria-label="图形组合方式"><button data-draw-operation="add" class="active" aria-pressed="true">叠加</button><button data-draw-operation="subtract" aria-pressed="false">镂空相减</button></div>
+                <div id="shape-ranges"></div>
+                <p class="control-note">镂空会减去下方已有的笔画和图形；之后叠加可重新填入。角度仅应用于新图形。</p>
+              </div>
+              <div id="draw-ranges"></div>
+              <div id="geometry-selection" hidden>
+                <label class="select-label">图形元素<select id="geometry-element" aria-label="选择图形元素"><option value="">点击画面选择图形</option></select></label>
+                <div id="geometry-selected-controls" hidden>
+                  <label class="select-label geometry-angle-label">旋转角度<span><input id="geometry-angle" aria-label="选中图形旋转角度" type="number" min="-180" max="180" step="1"> °</span></label>
+                  <div class="row"><small id="geometry-info" class="muted"></small><button class="text-button" id="delete-geometry">删除图形</button></div>
+                </div>
+              </div>
+              <div class="draw-actions"><button id="undo-draw" class="secondary" disabled><span data-icon="undo"></span>撤销</button><button id="redo-draw" class="secondary" disabled><span data-icon="redo"></span>重做</button><button id="clear-draw" class="text-button" disabled>清空</button></div>
+              <p id="draw-help" class="control-note">在右侧画布上绘制，松开即生成印刷效果。<br>空格＋拖动平移 · Ctrl/⌘ Z 撤销</p>
+            </div>
+          </section>
+          <section class="control-section">
+            <h2 class="section-title"><span>印刷方式</span><small>PROCESS</small></h2>
+            <div class="mode-grid">
+              <button data-mode="stamp" aria-pressed="true" class="active"><canvas width="100" height="60" id="stamp-sample" aria-hidden="true"></canvas><strong>干墨印章</strong><small>轮廓扩散 · 铜版颗粒</small></button>
+              <button data-mode="roller" aria-pressed="false"><canvas width="100" height="60" id="roller-sample" aria-hidden="true"></canvas><strong>滚墨拓印</strong><small>真实肌理 · 浓淡滚痕</small></button>
+            </div>
+            <div id="roller-controls" hidden>
+              <label class="select-label">真实滚筒肌理<select id="roller-texture" aria-label="真实滚筒肌理"></select></label>
+              <div class="roller-reference"><img id="roller-reference-image" alt="当前真实滚筒扫描肌理"><div><strong id="roller-reference-name"></strong><small>保留真实压痕、连片缺墨与纸纤维</small><small>13 张本地肌理 · 可调方向与尺度</small></div></div>
+            </div>
+            <div id="effect-ranges"></div>
+            <div class="row action-row"><button class="secondary" id="reseed"><span data-icon="shuffle"></span>换一版纹理</button><button class="text-button" id="reset">恢复默认</button></div>
+            <details id="effect-details"><summary><span>精细调整</span><span class="disclosure-state"><span class="when-closed">展开参数</span><span class="when-open">收起参数</span><span data-icon="chevron"></span></span></summary><div class="detail-body" id="advanced-ranges"></div></details>
+          </section>
+          <section class="control-section">
+            <h2 class="section-title"><span>印色与底材</span><small>INK & PAPER</small></h2>
+            <div id="ink-color-field"></div>
+            <div class="swatches" aria-label="印色预设">
+              <button data-color="#287fb0" style="--swatch:#287fb0" aria-label="印刷蓝" title="印刷蓝"></button>
+              <button data-color="#22221f" style="--swatch:#22221f" aria-label="炭黑" title="炭黑"></button>
+              <button data-color="#bc4335" style="--swatch:#bc4335" aria-label="朱红" title="朱红"></button>
+              <button data-color="#376b53" style="--swatch:#376b53" aria-label="墨绿" title="墨绿"></button>
+              <button data-color="#8a5b91" style="--swatch:#8a5b91" aria-label="紫墨" title="紫墨"></button>
+              <button data-color="#eeeeE6" style="--swatch:#eeeee6" aria-label="白墨" title="白墨"></button>
+            </div>
+            <div class="segment background-switch"><button data-bg="transparent" class="active" aria-pressed="true">透明</button><button data-bg="solid" aria-pressed="false">纯色</button><button data-bg="paper" aria-pressed="false">纸纹</button><button data-bg="image" aria-pressed="false">图片</button></div>
+            <div id="paper-color-field" hidden></div>
+            <div id="paper-ranges" hidden></div>
+            <div id="background-image-controls" hidden>
+              <input id="background-file" type="file" accept="image/png,image/jpeg,image/webp,image/avif,image/svg+xml,.jfif" hidden>
+              <button class="secondary full" id="upload-background"><span data-icon="upload"></span>上传背景图片</button>
+              <div id="background-info" class="background-info" hidden><img id="background-thumb" alt="背景图片缩略图"><div><strong id="background-name"></strong><small id="background-size"></small></div><button class="icon-button" id="replace-background" title="替换背景图片" aria-label="替换背景图片"><span data-icon="upload"></span></button><button class="icon-button" id="remove-background" title="移除背景图片" aria-label="移除背景图片"><span data-icon="close"></span></button></div>
+              <label class="select-label" id="background-fit-field" hidden>铺放方式<select id="background-fit"><option value="cover">填满画面</option><option value="contain">完整显示</option></select></label>
+              <p class="control-note">上传后画布自动匹配图片尺寸。更换比例后可调整铺放方式，空白区域透明。</p>
+            </div>
+          </section>
+          <section class="control-section canvas-settings">
+            <h2 class="section-title"><span>画面</span><small>CANVAS</small></h2>
+            <div class="ratio-grid canvas-ratios">
+              <button data-ratio="1" data-canvas="square" data-width="2048" data-height="2048" class="active">1 : 1</button><button data-ratio="0.8" data-canvas="4:5" data-width="1600" data-height="2000">4 : 5</button><button data-ratio="0.75" data-canvas="3:4" data-width="1500" data-height="2000">3 : 4</button>
+              <button data-ratio="0.6666666666666666" data-canvas="2:3" data-width="1600" data-height="2400">2 : 3</button><button data-ratio="0.5625" data-canvas="9:16" data-width="1080" data-height="1920">9 : 16</button><button data-ratio="1.7777777777777777" data-canvas="16:9" data-width="1920" data-height="1080">16 : 9</button>
+              <button data-ratio="1.5" data-canvas="3:2" data-width="2400" data-height="1600">3 : 2</button><button data-ratio="1.3333333333333333" data-canvas="4:3" data-width="2000" data-height="1500">4 : 3</button><button data-ratio="0.7069555302166477" data-canvas="a4-portrait" data-width="2480" data-height="3508">A4 竖向</button>
+              <button data-ratio="1.414516129032258" data-canvas="a4-landscape" data-width="3508" data-height="2480">A4 横向</button><button data-ratio="2" data-canvas="2:1" data-width="2400" data-height="1200">2 : 1</button><button id="canvas-custom">自定义</button>
+            </div>
+            <div class="canvas-dimensions"><label>宽度 <span>px</span><input id="canvas-width" type="number" min="1" max="32768" step="1" value="2048" aria-label="画布宽度"></label><label>高度 <span>px</span><input id="canvas-height" type="number" min="1" max="32768" step="1" value="2048" aria-label="画布高度"></label></div>
+            <div class="canvas-size-actions"><button class="text-button" id="swap-canvas">交换宽高</button><button class="secondary compact" id="apply-canvas">应用尺寸</button></div>
+            <p id="canvas-size-note" class="control-note">画布尺寸 · 2048 × 2048 px</p>
+            <div id="canvas-ranges"></div>
+          </section>
+        </div>
+        <div id="export-panel" hidden>
+          <section class="control-section">
+            <h2 class="section-title"><span>导出尺寸</span><small>SIZE</small></h2>
+            <div class="ratio-grid size-options"><button data-size="1024">1024</button><button data-size="2048" class="active">2048</button><button data-size="4096">4096</button></div>
+            <label class="select-label export-size-label">长边像素<input id="export-size" type="number" min="1" max="4096" step="1" value="2048"></label>
+            <p id="export-dimensions" class="control-note">2048 × 2048 px</p>
+          </section>
+          <section class="control-section export-card">
+            <h2 class="section-title"><span>PNG 图片</span><small>RASTER</small></h2>
+            <p class="control-note">保留完整油墨浓淡与细腻颗粒。</p>
+            <label id="png-background-option" class="check-control" hidden><input id="png-include-background" type="checkbox" checked>包含背景图片</label>
+            <p id="png-background-note" class="export-info">透明背景 · 缺墨区域透明</p>
+            <button class="primary full" id="download-png"><span data-icon="download"></span><span>下载透明 PNG</span></button>
+          </section>
+          <section class="control-section export-card">
+            <h2 class="section-title"><span>SVG 矢量</span><small>VECTOR</small></h2>
+            <label class="select-label">纹理细节<select id="svg-detail"><option value="low">简洁 · 更轻巧</option><option value="medium" selected>标准 · 推荐</option><option value="high">精细 · 更多路径</option></select></label>
+            <p class="control-note">透明背景，纹理转为真实路径。连续浓淡会分级简化，细节越多文件越大。</p>
+            <p id="svg-background-note" class="control-note" hidden>SVG 仅导出透明印记；需要保留背景图片时，请下载 PNG。</p>
+            <button class="secondary full" id="download-svg"><span data-icon="download"></span><span>下载路径 SVG</span></button>
+          </section>
+          <p class="control-note export-footnote">导出沿用当前纹理。界面主题、预览底色与缩放不影响导出。</p>
+          <p id="font-export-license" class="control-note font-license-note" hidden></p>
+        </div>
+      </div>
+      <footer class="sidebar-footer"><span class="local-dot"></span><span>素材仅在本机处理</span><a href="README.md" target="_blank" rel="noopener" title="使用说明">使用说明 ↗</a><a href="https://github.com/www886321-commits/rolling-ink" target="_blank" rel="noopener noreferrer" title="开源代码与许可证">源码 ↗</a></footer>
+    </aside>
+    <section class="stage" aria-label="作品预览">
+      <header class="stage-meta">
+        <span id="art-meta">干墨印章 <i>·</i> 2048 × 2048</span>
+        <div class="canvas-view-controls">
+          <button class="canvas-fit" id="fit" title="适应窗口"><span data-icon="fit"></span><span>适应窗口</span></button>
+          <button class="canvas-nav" id="pan" aria-label="平移画布" aria-pressed="false"><span data-icon="hand"></span></button>
+          <div class="canvas-zoom-group"><button class="canvas-nav" id="zoom-out" aria-label="缩小"><span data-icon="minus"></span></button><small id="zoom-label">100%</small><button class="canvas-nav" id="zoom-in" aria-label="放大"><span data-icon="plus"></span></button></div>
+          <span class="toolbar-divider"></span>
+          <div class="theme-corner"><button id="theme-toggle" class="template-theme-toggle" aria-label="界面主题" aria-expanded="false"><span data-icon="sun"></span></button><div class="theme-popover" id="theme-menu" hidden><button data-theme="light" aria-pressed="false">浅色</button><button data-theme="ivory" aria-pressed="true">米白</button><button data-theme="dark" aria-pressed="false">深色</button></div></div>
+        </div>
+      </header>
+      <div class="preview-tools">
+        <div class="row"><span class="tiny muted">预览底色</span><div class="preview-swatches"><button data-view="paper" class="active" aria-label="纸色预览" style="--view:#f4f0e6"></button><button data-view="checker" aria-label="透明棋盘格预览" class="checker-chip"></button><button data-view="dark" aria-label="深底预览" style="--view:#252525"></button></div></div>
+        <div class="row"><button class="text-button" id="compare" aria-pressed="false"><span data-icon="compare"></span>原图对比</button><button class="text-button" id="inspector-toggle" aria-pressed="false"><span data-icon="sliders"></span>快捷调节</button></div>
+      </div>
+      <div class="canvas-view-area" id="viewport" tabindex="0" aria-label="可缩放的预览，空格加拖动平移，滚轮缩放">
+        <div class="canvas-wrap view-paper" id="canvas-wrap"><canvas id="artwork" width="900" height="900" aria-label="印刷效果预览"></canvas><canvas id="original" width="900" height="900" hidden aria-label="原始素材预览"></canvas><canvas id="drawing-live" width="900" height="900" hidden aria-label="手绘画布"></canvas><span class="compare-badge" hidden>原始素材</span><div id="draw-empty" hidden><span data-icon="pen"></span><strong>从第一笔开始</strong><small>直接在画布绘制 · 松开生成肌理</small></div></div>
+        <div id="drop-overlay" hidden><span data-icon="upload"></span>松开以载入图片</div>
+      </div>
+      <footer class="stage-footer"><span id="render-status" role="status">正在准备油墨…</span><span id="view-hint">透明作品 · 纸色预览</span><button class="text-button" id="quick-export">导出作品<span data-icon="arrow"></span></button></footer>
+      <footer class="creator-footer" aria-label="作者信息">
+        <span class="creator-name">© 2026 <strong>安鱼</strong></span>
+        <nav aria-label="作者链接">
+          <a href="https://www.anyusj.com/" target="_blank" rel="noopener noreferrer" title="安鱼创意网站">ANYUSJ.COM ↗</a>
+          <div class="creator-wechat">
+            <button type="button" id="wechat-toggle" aria-expanded="false" aria-controls="wechat-card" title="安鱼设计资源公众号二维码">公众号<span class="creator-account"> · 安鱼设计资源</span></button>
+            <div id="wechat-card" class="creator-qr" role="region" aria-label="安鱼设计资源公众号二维码" hidden>
+              <strong>安鱼设计资源</strong>
+              <img src="assets/anyusj-wechat-qr.png" width="196" height="196" alt="安鱼设计资源公众号二维码">
+              <span>微信扫码关注</span>
+            </div>
+          </div>
+          <a href="https://xhslink.cn/m/5g1EQhRumkz" target="_blank" rel="noopener noreferrer" title="ANYU安鱼设计资源 · 小红书">小红书<span class="creator-account"> · ANYU安鱼设计资源</span> ↗</a>
+        </nav>
+      </footer>
+    </section>
+  </main>
+  <div id="toast" role="status" hidden></div>
+  <div id="export-progress" role="status" hidden><span class="spinner"></span><div><strong id="progress-title">正在准备导出</strong><small id="progress-message">保留当前纹理，请稍候…</small></div></div>
+  <aside id="inspector" class="context-card" hidden aria-label="快捷调节浮窗"><header class="context-card-head" id="inspector-grip"><div><small class="context-eyebrow">QUICK CONTROL</small><h2>油墨调节</h2></div><button class="context-close" id="inspector-close" aria-label="关闭快捷调节"><span data-icon="close"></span></button></header><div class="context-card-body"><div id="quick-ranges"></div><div id="quick-ink-color"></div><button class="secondary full" id="quick-reseed"><span data-icon="shuffle"></span>换一版纹理</button></div></aside>
+</div>
+<script type="module" src="app.js"></script>
+</body>
+</html>

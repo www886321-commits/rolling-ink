@@ -1,0 +1,29 @@
+Name 0:
+Copyright 2026 howlingFounts (https://github.com/howlingFounts). Copyright 2022-2023 The Unbounded Sans Project Authors (https://github.com/NightFurySL2001/unbounded-sans). Copyright 2020 The Dela Sans Project Authors (https://github.com/syakuzen/DelaGothic).
+
+Name 1:
+嗷呜碎瘾黑
+
+Name 2:
+Regular
+
+Name 4:
+Howl Shattered Display Regular
+
+Name 5:
+Version 1.000;Glyphs 4.1.1 (4108)
+
+Name 6:
+HowlShatteredDisplay-Regular
+
+Name 8:
+howlingFounts
+
+Name 9:
+aratakana, 无界黑补字计划小组
+
+Name 13:
+This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://scripts.sil.org/OFL
+
+Name 14:
+https://openfontlicense.org

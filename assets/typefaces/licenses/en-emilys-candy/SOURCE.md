@@ -1,0 +1,7 @@
+# Emilys Candy
+
+原文件：`⭐14-【可商用】EmilysCandy\EmilysCandy-Regular.ttf`
+
+SHA-256：`d3b86c565e6d7f4f3e1bcf43139e6444203c130d2c7d7b0b74e8dc0a6a69570a`
+
+字节未改动，仅 gzip 无损包装；每款一个常用字重。

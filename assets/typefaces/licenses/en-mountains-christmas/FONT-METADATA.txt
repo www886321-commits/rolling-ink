@@ -1,0 +1,29 @@
+Name 0:
+Copyright (c) 2010 2011, Font Diner, Inc DBA Tart Workshop (diner@fontdiner.com) with Reserved Font Name "Mountains of Christmas"
+
+Name 1:
+Mountains of Christmas
+
+Name 2:
+Regular
+
+Name 4:
+Mountains of Christmas Regular
+
+Name 5:
+Version 1.003
+
+Name 6:
+MountainsofChristmas-Regular
+
+Name 8:
+Font Diner, Inc DBA Tart Workshop
+
+Name 9:
+Crystal Kluge
+
+Name 13:
+This Font Software is licensed under the SIL Open Font License,Version 1.1. This license is available with a FAQ at:http://scripts.sil.org/OFL
+
+Name 14:
+http://scripts.sil.org/OFL

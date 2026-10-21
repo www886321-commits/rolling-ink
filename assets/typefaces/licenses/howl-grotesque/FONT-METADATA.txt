@@ -1,0 +1,29 @@
+Name 0:
+Copyright 2026 howlingFounts (https://github.com/howlingFounts). Copyright © 2025 The Flex Sans GB Project Authors (https://gitee.com/NightFurySL2001/flex-sc).
+
+Name 1:
+嗷呜碎黑体
+
+Name 2:
+Regular
+
+Name 4:
+Howl Shattered Grotesque Regular
+
+Name 5:
+Version 1.000;Glyphs 4.1.1 (4108)
+
+Name 6:
+HowlShatteredGrotesque-Regular
+
+Name 8:
+howlingFounts
+
+Name 9:
+The Frex Sans Project Authors. Modified from IBM Plex Sans: IBM Corp.
+
+Name 13:
+This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org
+
+Name 14:
+https://openfontlicense.org

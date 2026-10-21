@@ -1,0 +1,26 @@
+Name 0:
+Copyright 2019-2026 LXGW (https://github.com/lxgw/BlackSugarPlumCandy)
+Copyright 2014-2025 Adobe (http://www.adobe.com/), with Reserved Font Name 'Source'. Source is a trademark of Adobe in the United States and/or other countries.
+Copyright 2015 M+ FONTS PROJECT
+Copyright 2018 The BM JUA Project Authors
+
+Name 1:
+黑糖话梅
+
+Name 2:
+Regular
+
+Name 4:
+黑糖话梅 
+
+Name 5:
+Version 1.000;June 29, 2026
+
+Name 6:
+BlackSugarPlumCandy-Bold
+
+Name 13:
+This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org
+
+Name 14:
+https://openfontlicense.org

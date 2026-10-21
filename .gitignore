@@ -1,0 +1,18 @@
+# Generated files and local-only configuration
+/dist/
+/site/
+/滚墨印记.html
+/local-font-sources.json
+/local-font-root.json
+/verification/
+/scripts/
+/tests/*
+!/tests/*.test.mjs
+node_modules/
+.env
+.env.*
+!.env.example
+*.log
+__pycache__/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,13 @@
+* text=auto
+*.js text eol=lf
+*.mjs text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.cmd text eol=crlf
+*.font.js -text -diff
+*.hd.js -text -diff
+*.png binary
+*.webp binary
+*.woff2 binary

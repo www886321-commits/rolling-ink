@@ -1,0 +1,26 @@
+Name 0:
+Copyright (c) 2024-2026, Takushun Wu (https://github.com/takushun-wu/), with Reserved Font Name 'WenYuan Rounded', '文源圆体'. This font set contains glyphs from other fonts, the original authors of which own the copyright of the corresponding glyphs. For details, please refer to the license file attached to this font set.
+
+Name 1:
+文渊圆体
+
+Name 2:
+Bold
+
+Name 4:
+文渊圆体 Bold
+
+Name 5:
+Version 1.000
+
+Name 6:
+WenYuanRoundedSC-Bold
+
+Name 8:
+Takushun Wu
+
+Name 13:
+【非官方译文，以英文文本为准】本“字型软件”以《SIL开源字型授权》1.1版授权释出。本“字型软件”是以“按原样”（AS IS）提供，并不作任何明示或暗示的保证。有关使用本“字体软件”的特定语言、权限和限制，请参阅《SIL开源字型授权》。
+
+Name 14:
+https://openfontlicense.org/open-font-license-official-text/

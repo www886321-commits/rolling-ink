@@ -1,0 +1,32 @@
+Name 0:
+© LY Corporation
+
+Name 1:
+BoukenGothic ExtraBold
+
+Name 2:
+Regular
+
+Name 4:
+BoukenGothic
+
+Name 5:
+Version 1.000
+
+Name 6:
+BoukenGothic
+
+Name 7:
+LINE Seed JP is registered trademark of LINE.
+
+Name 8:
+ 
+
+Name 9:
+LY Corporation & Fontrix & Fontworks
+
+Name 13:
+This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: https://openfontlicense.org
+
+Name 14:
+https://openfontlicense.org
